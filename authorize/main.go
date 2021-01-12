@@ -18,6 +18,7 @@ func GetUsers(c *gin.Context) {
 	iter := client.Collection("user-roles").Documents(context.Background())
 	for {
 		doc, err := iter.Next()
+		fmt.Println(err)
 		if err == iterator.Done {
 			break
 		}
@@ -41,6 +42,7 @@ func PostUser(c *gin.Context) {
 
 func main() {
 	var err error
+	fmt.Println("ID " + os.Getenv("GOOGLE_PROJECT_ID"))
 	client, err = firestore.NewClient(context.Background(), os.Getenv("GOOGLE_PROJECT_ID"))
 	if err != nil {
 		fmt.Println("Error " + err.Error())
