@@ -1,5 +1,4 @@
 FROM golang:latest as go
-ARG PROJECT_ID
 ENV CGO_ENABLED 0
 WORKDIR /package
 COPY go.* FirestoreKey.json /package/
@@ -9,6 +8,7 @@ COPY main.go /package/
 RUN go build
 
 FROM gcr.io/distroless/static-debian10
+ARG PROJECT_ID
 COPY --from=go /package/authorize /package/*.json /
 ENV GOOGLE_APPLICATION_CREDENTIALS=/FirestoreKey.json
 ENV GOOGLE_PROJECT_ID=$PROJECT_ID
