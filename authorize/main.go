@@ -41,8 +41,11 @@ func PostUser(c *gin.Context) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	var err error
-	fmt.Println("ID " + os.Getenv("GOOGLE_PROJECT_ID"))
 	client, err = firestore.NewClient(context.Background(), os.Getenv("GOOGLE_PROJECT_ID"))
 	if err != nil {
 		fmt.Println("Error " + err.Error())
@@ -50,5 +53,5 @@ func main() {
 	r := gin.Default()
 	r.GET("/api/authorize", GetUsers)
 	r.POST("/api/authorize", PostUser)
-	r.Run(":8080")
+	r.Run(":" + port)
 }

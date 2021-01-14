@@ -2,4 +2,5 @@ FirestoreKey.json
 ._*
 run
 build
-
+terraform*
+.terraform*
